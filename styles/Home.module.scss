@@ -1,0 +1,22 @@
+.wrapper {
+  padding: 20px;
+  text-align: center;
+
+  .title {
+    font-size: 25px;
+  }
+
+  .levels {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+
+    .level {
+      padding: 10px;
+      cursor: pointer;
+      background: #a1a1a1;
+    }
+  }
+}

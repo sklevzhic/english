@@ -1,0 +1,19 @@
+.wrapper {
+  padding: 20px;
+  text-align: center;
+  .input {
+    //width: 60%;
+    &:after,&:before {
+      border-bottom: none !important;
+    }
+
+    textarea {
+      padding: 16px;
+      border-radius: 7px;
+      background: #ebebeb;
+      font-size: 16px;
+      line-height: 26px;
+      border: 1px solid #d7d7d7
+    }
+  }
+}
