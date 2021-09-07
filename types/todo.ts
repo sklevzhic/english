@@ -11,11 +11,15 @@ export interface Sentence {
 export interface SentenceState {
     sentences: Sentence[];
     error: string;
+    activeLesson: number | string | undefined,
+    activeLevel: string | undefined,
 }
 
 export enum SentencesActionTypes {
     FETCH_SENTENCES = 'FETCH_SENTENCES',
     FETCH_SENTENCES_ERROR = 'FETCH_SENTENCES_ERROR',
+    SELECT_LESSON = 'SELECT_LESSON',
+    SELECT_LEVEL = 'SELECT_LEVEL',
     CHANGE_COUNT = 'CHANGE_COUNT'
 }
 
@@ -34,4 +38,14 @@ interface ChangeCountAction {
     payload: Sentence
 }
 
-export type SentencesAction = FetchSentencesAction | FetchSentencesErrorAction | ChangeCountAction
+interface SelectLessonAction {
+    type: SentencesActionTypes.SELECT_LESSON,
+    payload: number
+}
+
+interface SelectLevelAction {
+    type: SentencesActionTypes.SELECT_LEVEL,
+    payload: string
+}
+
+export type SentencesAction = FetchSentencesAction | FetchSentencesErrorAction | ChangeCountAction | SelectLessonAction | SelectLevelAction

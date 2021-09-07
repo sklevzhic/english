@@ -2,7 +2,10 @@ import {SentencesAction, SentencesActionTypes, SentenceState} from "../../types/
 
 const initialState: SentenceState = {
     sentences: [],
-    error: ''
+    error: '',
+    activeLesson: '',
+    activeLevel: ''
+
 }
 
 export const sentenceReducer = (state = initialState, action: SentencesAction): SentenceState => {
@@ -27,6 +30,10 @@ export const sentenceReducer = (state = initialState, action: SentencesAction): 
                     return el
                 })
             }
+        case SentencesActionTypes.SELECT_LEVEL:
+            return {...state, activeLevel: action.payload}
+        case SentencesActionTypes.SELECT_LESSON:
+            return {...state, activeLesson: action.payload}
         default:
             return state
     }

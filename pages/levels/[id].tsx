@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import {NextThunkDispatch, wrapper} from "../../store";
 import {fetchTodos} from "../../store/actions-creators/todos";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
+import Filters from "../../components/Filters";
 
 interface ComponentProps {
 
@@ -17,6 +18,7 @@ const Level: React.FC<ComponentProps> = () => {
     const router = useRouter()
     return <MainLayout>
         <Grid>
+            <Filters/>
             <Paper>
                 <Typography>Английский</Typography>
                 <Button variant={"contained"} color={"primary"} onClick={() => router.push("/tests/a0")}>Тест</Button>
