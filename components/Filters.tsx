@@ -10,10 +10,10 @@ const Filters = () => {
     const {setActiveLevel, setActiveLesson} = useActions()
     const dispatch = useDispatch()
 
-    const [level, setLevel] = React.useState<string | number>('');
-    const [lesson, setLesson] = React.useState<string | number>('');
+    const [level, setLevel] = React.useState<string | number >("a0");
+    const [lesson, setLesson] = React.useState<string | number>('1');
     const aaa = () => {
-        dispatch(fetchTodos(level,lesson))
+        dispatch(fetchTodos('a1', 24))
     }
     return <Grid>
         <Paper>

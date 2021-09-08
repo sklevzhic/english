@@ -2,7 +2,7 @@ export interface Sentence {
     id: string | number,
     eng: string,
     rus: string,
-    level: string
+    level: string | number
     lesson: string | number,
     correctly: number
     errors: number
@@ -11,8 +11,8 @@ export interface Sentence {
 export interface SentenceState {
     sentences: Sentence[];
     error: string;
-    activeLesson: number | string | undefined,
-    activeLevel: string | undefined,
+    activeLesson: number | string,
+    activeLevel: number | string,
 }
 
 export enum SentencesActionTypes {
