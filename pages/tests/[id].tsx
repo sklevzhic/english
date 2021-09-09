@@ -1,12 +1,12 @@
 import React, {useEffect, useMemo, useState} from 'react'
 import {MainLayout} from "../../layouts/mainLayout";
-import {Grid, Paper, Typography, Input, Button} from "@material-ui/core";
 import classes from '../../styles/Test.module.scss'
 import {changeCount, fetchTodos} from '../../store/actions-creators/todos';
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {NextThunkDispatch, wrapper} from "../../store";
 import {useActions} from '../../hooks/useActions';
 import Filters from "../../components/Filters";
+import {Button, Card, Input} from "antd";
 
 
 interface ComponentProps {
@@ -38,26 +38,16 @@ const Level: React.FC<ComponentProps> = () => {
         } else {
             setResult('debil')
             let value = proffers[number].correctly || 0
-/*            changeCount(proffers[number].id, "errors", value + 1)*/
+            /*            changeCount(proffers[number].id, "errors", value + 1)*/
         }
     }
     return <MainLayout>
-        <Filters/>
-        <Grid>
-            <Paper className={classes.wrapper}>
-                <Typography>
-                    {proffers[number].level}, {proffers[number].lesson}
-                </Typography>
-                <Typography>Ошибок - {proffers[number].errors} </Typography>
-                <Typography>Ошибок - {proffers[number].correctly} </Typography>
-                <Typography className={classes.text} variant={"h6"}>{proffers[number].rus}</Typography>
-                <Input multiline fullWidth value={text} className={classes.input}
-                       onChange={(e) => setText(e.target.value)}/>
-                <Button onClick={checkAnswer} variant={"contained"} color={"primary"}>Проверить</Button>
-                <p>{result}</p>
-            </Paper>
+        <Card title={proffers[number].rus}>
+            <Input value={text} placeholder="Введите ответ" onChange={(e) => setText(e.target.value)} />
+            <Button onClick={checkAnswer} type="primary">Default</Button>
+            <p>{result}</p>
+        </Card>
 
-        </Grid>
     </MainLayout>;
 };
 

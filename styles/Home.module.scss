@@ -1,22 +1,12 @@
-.wrapper {
-  padding: 20px;
-  text-align: center;
+.mainbg {
+  background: #ee7752 !important;
+}
 
-  .title {
-    font-size: 25px;
-  }
+.formWrapper {
+  display: flex;
+  max-width: 600px;
 
-  .levels {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    justify-content: space-evenly;
-
-    .level {
-      padding: 10px;
-      cursor: pointer;
-      background: #a1a1a1;
-    }
+  div {
+    justify-content: center;
   }
 }

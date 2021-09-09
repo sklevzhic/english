@@ -1,12 +1,11 @@
 import React, {useState} from 'react'
 import {MainLayout} from "../../layouts/mainLayout";
-import {Button, Grid, Paper} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
 import {useRouter} from "next/router";
 import {NextThunkDispatch, wrapper} from "../../store";
 import {fetchTodos} from "../../store/actions-creators/todos";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import Filters from "../../components/Filters";
+import { Card } from 'antd';
 
 interface ComponentProps {
 
@@ -17,20 +16,14 @@ const Level: React.FC<ComponentProps> = () => {
     const [proffers, setProffers] = useState(sentences)
     const router = useRouter()
     return <MainLayout>
-        <Grid>
-            <Filters/>
-            <Paper>
-                <Typography>Английский</Typography>
-                <Button variant={"contained"} color={"primary"} onClick={() => router.push("/tests/a0")}>Тест</Button>
-                <ul>
-                    {
-                        proffers.map(el => {
-                            return <li key={el.id}>{el.rus} - {el.eng}</li>
-                        })
-                    }
-                </ul>
-            </Paper>
-        </Grid>
+
+        <ul>
+            {
+                proffers.map(el => {
+                    return <li key={el.id}>{el.rus} - {el.eng}</li>
+                })
+            }
+        </ul>
     </MainLayout>;
 };
 

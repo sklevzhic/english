@@ -1,9 +1,5 @@
 import React, {FC} from "react";
 import classes from "../styles/Test.module.scss";
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 
 interface SelectInArrayProps {
     title: string,
@@ -29,25 +25,7 @@ const SelectInArray: FC<SelectInArrayProps> = ({title, arr, disabled,valueSelect
         setOpen(true);
     };
 
-    return <FormControl disabled={disabled} className={classes.formControl}>
-        <InputLabel id="demo-controlled-open-select-label">{title}</InputLabel>
-        <Select
-            labelId="demo-controlled-open-select-label"
-            id="demo-controlled-open-select"
-            open={open}
-            onClose={handleClose}
-            onOpen={handleOpen}
-            value={valueSelect}
-            onChange={handleChange}
-        >
-            <MenuItem value="">
-                <em>{title}</em>
-            </MenuItem>
-            {arr.map(el => {
-                return <MenuItem key={el} value={el}>{el}</MenuItem>
-            })}
-        </Select>
-    </FormControl>
+    return <>fd</>
 
 
 }
