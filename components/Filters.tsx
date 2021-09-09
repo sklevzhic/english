@@ -9,10 +9,14 @@ const Filters = () => {
     const {setActiveLevel, setActiveLesson} = useActions()
     const dispatch = useDispatch()
 
-    const [level, setLevel] = React.useState<string | number>('');
-    const [lesson, setLesson] = React.useState<string | number>('');
+    const [level, setLevel] = React.useState<string | number >("a0");
+    const [lesson, setLesson] = React.useState<string | number>('1');
     const aaa = () => {
+<<<<<<< HEAD
         // dispatch(fetchTodos(level,lesson))
+=======
+        dispatch(fetchTodos('a1', 24))
+>>>>>>> 722c9c565caff547b3b14e87424a2303848f72c4
     }
     return <>
         <div className={classes.levelWrapper}>
