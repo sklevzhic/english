@@ -2,13 +2,14 @@ import {SentencesAction, SentencesActionTypes} from "../../types/todo";
 import {Dispatch} from "react";
 import axios from "axios";
 
-const URL = 'https://technicsklevzhits.herokuapp.com'
-// const URL = 'http://localhost:3004'
+// const URL = 'https://technicsklevzhits.herokuapp.com'
+const URL = 'http://localhost:3004'
 
 export const fetchTodos = (level = 'a1', lesson = 24) => {
     return async (dispatch: Dispatch<SentencesAction>) => {
         try {
-            const response = await axios.get(`${URL}/english?level=${level.toLowerCase()}&lesson=${lesson}`)
+            // const response = await axios.get(`${URL}/english?level=${level.toLowerCase()}&lesson=${lesson}`)
+            const response = await axios.get(`${URL}/english`)
             dispatch({type: SentencesActionTypes.FETCH_SENTENCES, payload: response.data})
 
         } catch (e) {

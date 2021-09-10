@@ -19,7 +19,7 @@ const Level: React.FC<ComponentProps> = () => {
     const [proffers, setProffers] = useState(sentences)
     const [text, setText] = useState("")
     const [result, setResult] = useState("")
-
+    const [isVisibleAnswer, setIsVisibleAnswer] = useState<boolean>(false)
     const {changeCount} = useActions()
 
     useEffect(() => {
@@ -35,6 +35,8 @@ const Level: React.FC<ComponentProps> = () => {
             setResult(`очень даже правильно - [${(proffers[number].eng)}] `)
             let value = proffers[number].correctly || 0
             changeCount(proffers[number].id, "correctly", value + 1)
+            setText('')
+            setIsVisibleAnswer(false)
         } else {
             setResult('debil')
             let value = proffers[number].correctly || 0
@@ -43,8 +45,17 @@ const Level: React.FC<ComponentProps> = () => {
     }
     return <MainLayout>
         <Card title={proffers[number].rus}>
+            <p>Правильные ответы - {proffers[number].correctly || 0}</p>
+            <p>Ошибки - {proffers[number].errors || 0}</p>
             <Input value={text} placeholder="Введите ответ" onChange={(e) => setText(e.target.value)} />
-            <Button onClick={checkAnswer} type="primary">Default</Button>
+            <Button onClick={checkAnswer} type="primary">Проверить</Button>
+
+            {
+                isVisibleAnswer
+                    ? <p  onClick={() => setIsVisibleAnswer(!isVisibleAnswer)}>{proffers[number].eng}</p>
+                    : <Button onClick={() => setIsVisibleAnswer(!isVisibleAnswer)} type="primary">Answer</Button>
+            }
+
             <p>{result}</p>
         </Card>
 
