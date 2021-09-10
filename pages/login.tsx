@@ -9,14 +9,17 @@ interface LoginPageProps {
 
 export const LoginPage: React.FC<LoginPageProps> = () => {
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        console.log(values);
     };
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
-    return <MainLayout>
+    return <div className={classes.loginbg}>
         <Card className={classes.formWrapper}>
+            <div>
+                image
+            </div>
             <Form
                 name="basic"
                 initialValues={{remember: true}}
@@ -40,10 +43,6 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
                     <Input.Password/>
                 </Form.Item>
 
-                <Form.Item name="remember" valuePropName="checked" wrapperCol={{offset: 8, span: 16}}>
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
                 <Form.Item wrapperCol={{offset: 8, span: 16}}>
                     <Button type="primary" htmlType="submit">
                         Submit
@@ -52,7 +51,7 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
             </Form>
         </Card>
 
-    </MainLayout>;
+    </div>;
 };
 
 export default LoginPage

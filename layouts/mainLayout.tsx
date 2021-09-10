@@ -17,14 +17,15 @@ interface MainLayoutProps {
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = ({children}) => {
-    const [isCollapsed, setUsCollapsed] = useState<boolean>(false)
+    const [isCollapsed, setUsCollapsed] = useState<boolean>(true)
+    const [isAuth, setIsAuth] = useState<boolean>(false)
 
     const toggle = () => {
         setUsCollapsed(!isCollapsed);
     };
 
     return <Layout>
-        <Sider trigger={null} collapsible collapsed={isCollapsed}>
+        {isAuth && <Sider trigger={null} collapsible collapsed={isCollapsed}>
             <div className="logo"/>
             <div className={styles.munuButton}>
                 {React.createElement(isCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
@@ -33,19 +34,19 @@ export const MainLayout: React.FC<MainLayoutProps> = ({children}) => {
                 })}
             </div>
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                <SubMenu key="sub1" icon={<UserOutlined />} title="Теория">
+                <SubMenu key="sub1" icon={<UserOutlined/>} title="Теория">
                     <Menu.Item key="1">option1</Menu.Item>
                     <Menu.Item key="2">option2</Menu.Item>
                     <Menu.Item key="3">option3</Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub2" icon={<UserOutlined />} title="Практика">
+                <SubMenu key="sub2" icon={<UserOutlined/>} title="Практика">
                     <Menu.Item key="4">option1</Menu.Item>
                     <Menu.Item key="5">option2</Menu.Item>
                     <Menu.Item key="6">option3</Menu.Item>
                     <Menu.Item key="7">option4</Menu.Item>
                 </SubMenu>
             </Menu>
-        </Sider>
+        </Sider>}
         <Layout className="site-layout">
             <Content
                 className="site-layout-background"

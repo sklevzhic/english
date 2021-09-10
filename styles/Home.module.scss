@@ -1,12 +1,14 @@
-.mainbg {
-  background: #ee7752 !important;
+.loginbg {
+  background: #ee7752;
+  width: 100vw;
+  height: 100vh;
+  padding: 80px 10px;
+  min-width: 250px;
 }
 
 .formWrapper {
   display: flex;
-  max-width: 600px;
-
-  div {
-    justify-content: center;
-  }
+  justify-content: center;
+  max-width: 500px;
+  margin: 10px auto;
 }
