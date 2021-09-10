@@ -5,7 +5,6 @@ import {changeCount, fetchTodos} from '../../store/actions-creators/todos';
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {NextThunkDispatch, wrapper} from "../../store";
 import {useActions} from '../../hooks/useActions';
-import Filters from "../../components/Filters";
 import {Button, Card, Input} from "antd";
 
 

@@ -4,8 +4,6 @@ import {useRouter} from "next/router";
 import {NextThunkDispatch, wrapper} from "../../store";
 import {fetchTodos} from "../../store/actions-creators/todos";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import Filters from "../../components/Filters";
-import { Card } from 'antd';
 
 interface ComponentProps {
 
