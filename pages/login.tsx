@@ -1,6 +1,5 @@
 import React from 'react'
-import {MainLayout} from "../layouts/mainLayout";
-import {Form, Input, Button, Checkbox, Card} from 'antd';
+import {Form, Input, Button, Card} from 'antd';
 import classes from "../styles/Home.module.scss";
 
 interface LoginPageProps {

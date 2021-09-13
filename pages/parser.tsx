@@ -1,7 +1,9 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import {MainLayout} from "../layouts/mainLayout";
-import {Form, Input, Button, Checkbox, Card} from 'antd';
+import {Form, Button, Checkbox, Card} from 'antd';
 import classes from "../styles/Home.module.scss";
+import { Input } from 'antd';
+const { TextArea } = Input;
 
 interface LoginPageProps {
 
@@ -10,37 +12,55 @@ interface LoginPageProps {
 export const LoginPage: React.FC<LoginPageProps> = () => {
     const [text, setText] = useState<string>('')
 
-    const onFinish = (values: any) => {
-        let str: string[] = values.username.replace(/\[.*?\]/g, '').replace(/[0-9]/g, '').trim().split('')
-        const eng = (elem: string) => {
-            const regexENG = /^['a-zA-Z]$/;
-            const regexRUS = /^[-а-яА-Я]$/;
-            const regexSPACE = /^[\s]$/;
-
-            if (elem.match(regexENG)) {
-                return "eng"
-            }
-            else if (elem.match(regexRUS)) {
-                return "rus"
-            }
-            else if (elem.match(regexSPACE)) {
-                return "space"
-            }
-        }
-        let b: string[] = []
-        str.forEach((el,i ) => {
-            if ((eng(str[i]) === eng(str[i+1])) || (eng(str[i]) === eng(str[i+2]))) {
-                if ( eng(str[i]) === 'rus' ) {
-                    b.push(str[i])
-                }
+    const arrayWordsToString = (array) => {
+        return array.map((el,i) => {
+            if ((array[i] === ' ') && (array[i+1] === ' ') && (array[i+2] === ' ')) {
+                return '.'
             } else {
-                console.log(false)
+                return el
+            }
+        }).join("").replace(/\.+/g, '.').replace(/ {2,}/g, '').split('.').filter(n => n)
+    }
+
+    const onFinish = (values: any) => {
+        localStorage.setItem('test', JSON.stringify(values.username));
+        let str: string[] = values.username.replace(/\[.*?\]/g, '').replace(/[0-9]/g, '').trim().split('')
+        let arrENG = []
+        let arrRUS = []
+        const regexRUS = /^[-а-яА-Я]$/;
+        const regexENG = /^['a-zA-Z]$/;
+        str.forEach(elem => {
+            if (elem === ' ') {
+                arrENG.push(elem)
+                arrRUS.push(elem)
+            } else {
+                if (elem.match(regexENG)) {
+                    arrENG.push(elem)
+                }
+                else if (elem.match(regexRUS)) {
+                    arrRUS.push(elem)
+                }
             }
 
         })
-        console.log(b)
-        // setText()
+        const arrayStrRUS = arrayWordsToString(arrRUS)
+        const arrayStrENG = arrayWordsToString(arrENG)
+
+        let result = arrayStrENG.map((el,i) => {
+            return {
+                rus: arrayStrRUS[i],
+                eng: arrayStrENG[i],
+                lesson: values.lesson,
+                level: values.level,
+                id: `lvl${values.level}l${values.lesson}`
+            }
+        })
+        setText(result)
     };
+
+    const jsonToText = (obj) => {
+        return JSON.stringify(obj).substring(1, JSON.stringify(obj).length-1)
+    }
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
@@ -62,9 +82,21 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
                     name="username"
                     rules={[{required: true, message: 'Please input your username!'}]}
                 >
-                    <Input
-                        defaultValue={`1 У меня нет каких-либо вопросов I don't have any questions [z] [ai dəvnt hæv 'eni 'kwestfənz] 2 Она не знает ответа She doesn't know the answer [si : daznt nəv ði 'a : nsə] 3 У меня нет времени I don't have time`}
-                    />
+                    <TextArea className={classes.widthInput} rows={4} defaultValue={`1 У меня нет каких-либо вопросов I don't have any questions [z] [ai dəvnt hæv 'eni 'kwestfənz] 2 Она не знает ответа She doesn't know the answer [si : daznt nəv ði 'a : nsə] 3 У меня нет времени I don't have time`}></TextArea>
+                     </Form.Item>
+                <Form.Item
+                    label="Lesson"
+                    name="lesson"
+                    rules={[{required: true, message: 'Please input your username!'}]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    label="Level"
+                    name="level"
+                    rules={[{required: true, message: 'Please input your username!'}]}
+                >
+                    <Input />
                 </Form.Item>
 
                 <Form.Item wrapperCol={{offset: 8, span: 16}}>
@@ -73,10 +105,15 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
                     </Button>
                 </Form.Item>
             </Form>
+            <Button onClick={() => {navigator.clipboard.writeText(jsonToText(text))}}>Copy</Button>
+            <ul>
+                {
+                    Object.keys(text).map((el,i) => {
+                        return <li>{text[el].rus} - {text[el].eng} </li>
+                    })
+                }
+            </ul>
 
-            <p>
-                {text}
-            </p>
         </Card>
 
     </div>;
