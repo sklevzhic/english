@@ -20,11 +20,9 @@ const Level: React.FC<ComponentProps> = () => {
     const [result, setResult] = useState("")
     const [isVisibleAnswer, setIsVisibleAnswer] = useState<boolean>(false)
     const {changeCount} = useActions()
-
     useEffect(() => {
         setProffers(sentences)
     }, [sentences])
-
     const number = useMemo(() => {
         return Math.floor(Math.random() * proffers.length)
         setText("")
@@ -39,7 +37,7 @@ const Level: React.FC<ComponentProps> = () => {
         } else {
             setResult('debil')
             let value = proffers[number].correctly || 0
-            /*            changeCount(proffers[number].id, "errors", value + 1)*/
+            changeCount(proffers[number].id, "errors", value + 1)
         }
     }
     return <MainLayout>
@@ -48,6 +46,7 @@ const Level: React.FC<ComponentProps> = () => {
             <p>Ошибки - {proffers[number].errors || 0}</p>
             <Input value={text} placeholder="Введите ответ" onChange={(e) => setText(e.target.value)} />
             <Button onClick={checkAnswer} type="primary">Проверить</Button>
+            <Button onClick={checkAnswer} type="primary">Следующий</Button>
 
             {
                 isVisibleAnswer

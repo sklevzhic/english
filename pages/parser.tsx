@@ -1,6 +1,5 @@
 import {useState} from 'react'
-import {MainLayout} from "../layouts/mainLayout";
-import {Form, Button, Checkbox, Card} from 'antd';
+import {Form, Button, Card} from 'antd';
 import classes from "../styles/Home.module.scss";
 import { Input } from 'antd';
 const { TextArea } = Input;
@@ -12,25 +11,33 @@ interface LoginPageProps {
 export const LoginPage: React.FC<LoginPageProps> = () => {
     const [text, setText] = useState<string>('')
 
-    const arrayWordsToString = (array) => {
-        return array.map((el,i) => {
+    const arrayWordsToString = (array: string[]) => {
+        console.log(array)
+        let b =  array.map((el,i) => {
             if ((array[i] === ' ') && (array[i+1] === ' ') && (array[i+2] === ' ')) {
                 return '.'
             } else {
                 return el
             }
-        }).join("").replace(/\.+/g, '.').replace(/ {2,}/g, '').split('.').filter(n => n)
+        }).join("").replace(/\.+/g, '.').replace(/ {2,}/g, '').split('.').filter(n => n !== "?").map(el => {
+            if (el[0] === '?') {
+                return el.slice(1)
+            } else {
+                return el
+            }
+        }).filter(n => n)
+        return b
     }
 
     const onFinish = (values: any) => {
         localStorage.setItem('test', JSON.stringify(values.username));
         let str: string[] = values.username.replace(/\[.*?\]/g, '').replace(/[0-9]/g, '').trim().split('')
-        let arrENG = []
-        let arrRUS = []
+        let arrENG: string[] = []
+        let arrRUS: string[] = []
         const regexRUS = /^[-а-яА-Я]$/;
         const regexENG = /^['a-zA-Z]$/;
         str.forEach(elem => {
-            if (elem === ' ') {
+            if ( (elem === ' ')  || (elem === '?') ){
                 arrENG.push(elem)
                 arrRUS.push(elem)
             } else {
@@ -41,12 +48,11 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
                     arrRUS.push(elem)
                 }
             }
-
         })
         const arrayStrRUS = arrayWordsToString(arrRUS)
         const arrayStrENG = arrayWordsToString(arrENG)
+        let result = arrayStrENG.map((el: string,i: number) => {
 
-        let result = arrayStrENG.map((el,i) => {
             return {
                 rus: arrayStrRUS[i],
                 eng: arrayStrENG[i],
