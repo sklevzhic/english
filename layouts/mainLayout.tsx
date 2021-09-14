@@ -1,16 +1,15 @@
 import React, {useState} from 'react'
-import {Card, Layout, Menu} from 'antd';
+import {Button, Card, Layout, Menu} from 'antd';
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
 } from '@ant-design/icons';
-import styles from '../styles/Home.module.scss'
+import styles from '../layouts/mainLayout.module.scss'
 import SubMenu from 'antd/lib/menu/SubMenu';
+import router from "next/router";
 
-const {Header, Sider, Content} = Layout;
+const {Sider, Content} = Layout;
 
 interface MainLayoutProps {
 
@@ -18,7 +17,7 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({children}) => {
     const [isCollapsed, setUsCollapsed] = useState<boolean>(true)
-    const [isAuth, setIsAuth] = useState<boolean>(false)
+    const [isAuth, setIsAuth] = useState<boolean>(true)
 
     const toggle = () => {
         setUsCollapsed(!isCollapsed);
@@ -33,6 +32,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({children}) => {
                     onClick: toggle,
                 })}
             </div>
+            <Button onClick={() => router.push(`/`)}>Home</Button>
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                 <SubMenu key="sub1" icon={<UserOutlined/>} title="Теория">
                     <Menu.Item key="1">option1</Menu.Item>
@@ -47,7 +47,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({children}) => {
                 </SubMenu>
             </Menu>
         </Sider>}
-        <Layout className="site-layout">
+        <Layout className={`site-layout ${styles.bg}`}>
             <Content
                 className="site-layout-background"
                 style={{
