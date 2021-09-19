@@ -62,7 +62,7 @@ const Level: React.FC<ComponentProps> = () => {
 
 export default Level
 
-export const getServerSideProps = wrapper.getServerSideProps(async ({store}) => {
+export const getServerSideProps = wrapper.getServerSideProps(async ({query,store}) => {
     const dispatch = store.dispatch as NextThunkDispatch
-    await dispatch(await fetchTodos())
+    await dispatch(await fetchTodos(query.id as string, query.lesson as string))
 })
