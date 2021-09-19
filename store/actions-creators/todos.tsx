@@ -2,8 +2,8 @@ import {SentencesAction, SentencesActionTypes} from "../../types/todo";
 import {Dispatch} from "react";
 import axios from "axios";
 
-// const URL = 'https://technicsklevzhits.herokuapp.com'
-const URL = 'http://localhost:3004'
+const URL = 'https://technicsklevzhits.herokuapp.com'
+// const URL = 'http://localhost:3004'
 
 export const fetchTodos = (level = 'a0', lesson = '2') => {
 debugger
