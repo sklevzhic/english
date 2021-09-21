@@ -4,6 +4,7 @@ import React from "react";
 import styles from '../styles/Home.module.scss'
 import {useRouter} from "next/router";
 import {Button, Card, Tooltip} from 'antd';
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
 const {Meta} = Card;
 
@@ -11,7 +12,7 @@ const {Meta} = Card;
 const Home: NextPage = (props) => {
 
     const router = useRouter()
-
+    const { levels } = useTypedSelector(state => state.sentence)
     return (
         <MainLayout>
             <h4 className={styles.mainTitle}>
@@ -23,7 +24,7 @@ const Home: NextPage = (props) => {
                 <div>
                     <p className={styles.subtitle}>Выбрать уровень</p>
                     <ul className={styles.levels}>
-                        {['a0', 'a1', 'a2', 'b1', 'b2', 'b3'].map(el => {
+                        {levels.map(el => {
                             return <Button
                                 size="large"
                                 key={el}

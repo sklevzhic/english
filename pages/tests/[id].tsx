@@ -5,14 +5,18 @@ import {changeCount, fetchTodos} from '../../store/actions-creators/todos';
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {NextThunkDispatch, wrapper} from "../../store";
 import {useActions} from '../../hooks/useActions';
-import {Button, Card, Input} from "antd";
+import {Button, Card, Input, PageHeader, Row} from "antd";
+import router from "next/router";
 
 
 interface ComponentProps {
-
+    query: {
+        id?: string,
+        lesson?: string
+    }
 }
 
-const Level: React.FC<ComponentProps> = () => {
+const Level: React.FC<ComponentProps> = ({query}) => {
 
     const {sentences} = useTypedSelector(state => state.sentence)
     const [proffers, setProffers] = useState(sentences)
@@ -41,6 +45,15 @@ const Level: React.FC<ComponentProps> = () => {
         }
     }
     return <MainLayout>
+        <Row gutter={16}>
+            <PageHeader
+                className="site-page-header"
+                onBack={() => router.push('/level/a0')}
+                title={`Уровень ${query.id}, урок ${query.lesson}`}
+                subTitle={<Button onClick={() => router.push('/tests/a0')}>Проверить знания</Button>}
+            />
+        </Row>
+
         <Card title={proffers[number].rus}>
             <p>Правильные ответы - {proffers[number].correctly || 0}</p>
             <p>Ошибки - {proffers[number].errors || 0}</p>
@@ -65,4 +78,9 @@ export default Level
 export const getServerSideProps = wrapper.getServerSideProps(async ({query,store}) => {
     const dispatch = store.dispatch as NextThunkDispatch
     await dispatch(await fetchTodos(query.id as string, query.lesson as string))
+    return {
+        props: {
+            query: query,
+        }
+    }
 })

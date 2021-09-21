@@ -7,9 +7,17 @@ export interface Sentence {
     correctly: number
     errors: number
 }
+export interface Lesson {
+    level: string,
+    lesson: string,
+    title: string
+
+}
 
 export interface SentenceState {
     sentences: Sentence[];
+    levels: string[],
+    lessons: Lesson[],
     error: string;
     activeLesson: number | string,
     activeLevel: number | string,

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {MainLayout} from "../../layouts/mainLayout";
 
-import {Card, Col, List, PageHeader, Row} from 'antd';
+import {Button, Card, Col, List, PageHeader, Row, Typography} from 'antd';
 import router from "next/router";
 import {NextThunkDispatch, wrapper} from '../../store';
 import {fetchTodos} from '../../store/actions-creators/todos';
@@ -17,8 +17,7 @@ interface ComponentProps {
 
 const LevelItem: React.FC<ComponentProps> = ({query}) => {
 
-    const {sentences} = useTypedSelector(state => state.sentence)
-
+    const { sentences, lessons } = useTypedSelector(state => state.sentence)
     const [activeLesson, setActiveLesson] = useState(query.lesson || null)
     const [activeLevel, setActiveLevel] = useState(query.id || null)
 
@@ -26,33 +25,6 @@ const LevelItem: React.FC<ComponentProps> = ({query}) => {
         setActiveLesson(query.lesson || null)
         setActiveLevel(query.id || null)
     }, [query])
-    const lessons = [
-        {level: "a0", lesson: "2", title: "was/were"},
-        {level: "a0", lesson: "4", title: "to be"},
-        {level: "a0", lesson: "6", title: "to be"},
-        {level: "a0", lesson: "8", title: "to be"},
-        {level: "a0", lesson: "10", title: "to be"},
-        {level: "a0", lesson: "12", title: "to be"},
-        {level: "a0", lesson: "14", title: "to be"},
-        {level: "a0", lesson: "16", title: "to be"},
-        {level: "a0", lesson: "18", title: "to be"},
-        {level: "a0", lesson: "20", title: "to be"},
-        {level: "a0", lesson: "22", title: "to be"},
-        {level: "a0", lesson: "24", title: "to be"},
-        {level: "a0", lesson: "26", title: "to be"},
-        {level: "a0", lesson: "28", title: "to be"},
-        {level: "a0", lesson: "30", title: "to be"},
-        {level: "a0", lesson: "32", title: "to be"},
-        {level: "a0", lesson: "34", title: "to be"},
-        {level: "a0", lesson: "36", title: "to be"},
-        {level: "a0", lesson: "38", title: "to be"},
-        {level: "a0", lesson: "40", title: "to be"},
-        {level: "a0", lesson: "42", title: "to be"},
-        {level: "a0", lesson: "44", title: "to be"},
-        {level: "a0", lesson: "46", title: "to be"},
-        {level: "a0", lesson: "48", title: "to be"},
-        {level: "a0", lesson: "50", title: "to be"},
-    ]
 
     // const [showAllLessons, setShowAllLessons] = useState<boolean>(true)
 
@@ -61,37 +33,56 @@ const LevelItem: React.FC<ComponentProps> = ({query}) => {
     }
     return <MainLayout>
         <div>
+
             <div className="site-card-wrapper">
                 {
                     !activeLesson
-                        ? <Row gutter={16}>
+                        ? <Row gutter={[24, 24]}>
                             {
                                 lessons.map(el => {
-                                    return <Col key={el.lesson} span={4}>
+                                    return <Col key={el.lesson}
+                                                xs={{span: 24}}
+                                                sm={{span: 12}}
+                                                md={{span: 6}}
+                                                lg={{span: 6}}
+                                                xl={{span: 4}}
+                                                xxl={{span: 4}}
+                                    >
                                         <Card onClick={() => handleShowLevels(el)}
                                               hoverable
-                                              title={`Урок ${el.lesson}`} bordered={false}>
+                                              title={`Урок ${el.lesson}`} bordered={true}>
                                             {el.title}
                                         </Card>
                                     </Col>
                                 })
                             }
                         </Row>
-                        : <Row gutter={16}>
-                            <PageHeader
-                                className="site-page-header"
-                                onBack={() => router.push('/level/a0')}
-                                title={`Уровень ${query.id}, урок ${query.lesson}`}
-                                subTitle={"Уроки"}
-                            />
-                        </Row>
+                        : <>
+                            <Row gutter={16}>
+                                <PageHeader
+                                    className="site-page-header"
+                                    onBack={() => router.push(`/level/${query.id}`)}
+                                    title={`Уровень ${query.id}, урок ${query.lesson}`}
+                                    subTitle={<Button
+                                        onClick={() => router.push(`/tests/${query.id}?lesson=${query.lesson}`)}>Проверить
+                                        знания</Button>}
+                                />
+                            </Row>
+                            <div>
+                                <p>Специальные вопросы в прошедшем времени Where + did +</p>
+                            </div>
+                        </>
+
+
                 }
 
                 {
                     activeLesson && <>
                         {
                             sentences.map(el => {
-                                return <SentencesItem id={+el.id} errors={el.errors} correctly={el.correctly} rus={el.rus} eng={el.eng}/>
+                                return <SentencesItem key={el.id} id={+el.id} errors={el.errors}
+                                                      correctly={el.correctly}
+                                                      rus={el.rus} eng={el.eng}/>
                             })
                         }
                     </>
