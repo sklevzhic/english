@@ -11,7 +11,7 @@ interface SentencesItem {
 
 const SentencesItem: React.FC<SentencesItem> = ({id, rus, eng, correctly, errors}) => {
     const [show, setShow] = useState<boolean>(false)
-    return <Card type="inner" key={id} title={rus} extra={<> <p>errors = {errors || 0} correctly = {correctly || 0} </p><a href="#">Star</a><a href="#">Edit</a></>}>
+    return <Card type="inner" key={id} title={rus}>
 
         {
             show

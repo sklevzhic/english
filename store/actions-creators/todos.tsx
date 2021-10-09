@@ -5,19 +5,48 @@ import axios from "axios";
 const URL = 'https://technicsklevzhits.herokuapp.com'
 // const URL = 'http://localhost:3004'
 
-export const fetchTodos = (level = 'a0', lesson = '2') => {
+export const fetchTodos = (level = 'a0', lesson: string) => {
     return async (dispatch: Dispatch<SentencesAction>) => {
         try {
-            const response = await axios.get(`${URL}/english?level=${level.toLowerCase()}&lesson=${lesson}`)
+            const response = await axios.get(`${URL}/english?level=${level.toLowerCase()}${lesson ? '&lesson=' : ""}`)
             dispatch({type: SentencesActionTypes.FETCH_SENTENCES, payload: response.data})
-
         } catch (e) {
             dispatch({
                 type: SentencesActionTypes.FETCH_SENTENCES_ERROR,
-                payload: 'Произошла ошибка при загрузке'})
+                payload: 'Произошла ошибка при получении id'})
         }
     }
 }
+export const fetchQuestions = (level = 'a0', lesson: string) => {
+    return async (dispatch: Dispatch<SentencesAction>) => {
+        try {
+            if (lesson) {
+                const responseSentences = await axios.get(`${URL}/english?level=${level.toLowerCase()}&lesson=${lesson}`)
+                dispatch({type: SentencesActionTypes.FETCH_SENTENCES, payload: responseSentences.data})
+            } else {
+                const responseSentences = await axios.get(`${URL}/english?level=${level.toLowerCase()}${lesson ? '&lesson=' : ""}`)
+                let idsSentences = responseSentences.data.map((el: { id: string }) => el.id)
+                let url = generatingURLForQuestion(idsSentences)
+                const response = await axios.get(`${URL}/english?level=${level.toLowerCase()}${url}`)
+                dispatch({type: SentencesActionTypes.FETCH_SENTENCES, payload: response.data})
+            }
+        } catch (e) {
+            dispatch({
+                type: SentencesActionTypes.FETCH_SENTENCES_ERROR,
+                payload: 'Произошла ошибка при загрузке вопросов'})
+        }
+    }
+}
+
+const generatingURLForQuestion = (arr: string[], count = 20) => {
+    let newArr: string[] = []
+    for (let i=0; i<=count; i++) {
+        let el = Math.floor(Math.random() * arr.length)
+        newArr.push(arr[el])
+    }
+    return newArr.map(el => `&id=${el}`).join("")
+}
+
 export const fetchLessons = (level = 'a0') => {
 
     return async (dispatch: Dispatch<SentencesAction>) => {
@@ -47,7 +76,6 @@ export const changeCount = (id: number | string, type: string, value: number) =>
         }
     }
 }
-
 export const setActiveLevel = (payload: string): SentencesAction => {
     return {type: SentencesActionTypes.SELECT_LEVEL, payload}
 }

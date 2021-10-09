@@ -33,16 +33,12 @@ const LevelItem: React.FC<ComponentProps> = ({query}) => {
     const showModal = () => {
         setIsModalVisible(true);
     };
-
     const handleOk = () => {
         setIsModalVisible(false);
     };
-
     const handleCancel = () => {
         setIsModalVisible(false);
     };
-
-
     const handleShowLevels = (el: { level: string, lesson: string }) => {
         router.push(`/level/${query.id}?lesson=${el.lesson}`)
     }
@@ -56,7 +52,14 @@ const LevelItem: React.FC<ComponentProps> = ({query}) => {
                             <PageHeader
                                 className="site-page-header"
                                 onBack={() => router.push(`/`)}
-                                title={`Уровень ${query.id}, урок ${query.lesson}`}
+                                title={`Уровень ${query.id}`}
+                                extra={[
+                                    <Button
+                                        type="primary"
+                                        key="3"
+                                        onClick={() => router.push(`/tests/${query.id}`)}
+                                    >Тест по уровню</Button>,
+                                ]}
                             />
                             <Row gutter={[24, 24]}>
                                 {
